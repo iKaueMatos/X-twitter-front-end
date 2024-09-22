@@ -84,4 +84,4 @@ Este projeto está licenciado sob a Licença MIT. Veja o arquivo LICENSE para ma
 Para qualquer dúvida, sinta-se à vontade para entrar em contato:
 
 - Kauê de matos oliveira - ikauedeveloper@gmail.com
-- GitHub: @ikauedev
+- GitHub: @IKaueMatos
