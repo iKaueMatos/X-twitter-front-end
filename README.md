@@ -42,11 +42,16 @@ Para configurar este projeto localmente, siga estes passos:
 1. **Clone o repositório**
 
 ```bash
-    git clone 
-    cd x-clone
+    git clone https://github.com/iKaueMatos/X-twitter-front-end
 ```
 
-2. **instalação das dependencias**
+2. **Acessar o diretorio**
+ 
+```bash
+    cd X-twitter-front-end
+```
+
+3. **instalação das dependencias**
 
 ```bash
    npm install
