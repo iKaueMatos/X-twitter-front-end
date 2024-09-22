@@ -1,0 +1,21 @@
+services:
+  node:
+    container_name: node
+    hostname: node
+    image: node:16.13.2
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./:/home/node/app
+    expose:
+      - "8081"
+
+  frontend-service:
+    container_name: frontend-service
+    hostname: frontend-service
+    image: nansimon/frontend:1.0.1
+    restart: unless-stopped
+    ports:
+      - 3000:3000

@@ -1,0 +1,44 @@
+@font-face {
+  font-weight: 400;
+  font-family: 'SF Compact Display';
+  src: url('../../public/fonts/SF-Compact-Display-Regular.ttf');
+}
+
+@font-face {
+  font-weight: 500;
+  font-family: 'SF Compact Display';
+  src: url('../../public/fonts/SF-Compact-Display-Medium.ttf');
+}
+
+@font-face {
+  font-weight: 700;
+  font-family: 'SF Compact Display';
+  src: url('../../public/fonts/SF-Compact-Display-Bold.ttf');
+}
+
+@font-face {
+  font-weight: 900;
+  font-family: 'SF Compact Display';
+  src: url('../../public/fonts/SF-Compact-Display-Black.ttf');
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  background: #ffffff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
