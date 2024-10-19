@@ -1,94 +1,77 @@
+import SignUpTemplate from '@/forms/templates/SignUpTemplate';
+import { useSignUpMutation } from '@/query/authorization/authorization.mutation';
+import { IAuthSignUpRequest } from '@/services/types';
 import {
   Box,
   Button,
   Container,
   Link,
+  TextField,
   Typography,
   useTheme,
+  useMediaQuery,
 } from '@mui/material';
-import React from 'react';
+import { AxiosError } from 'axios';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { FieldErrors, SubmitHandler, useForm, UseFormReturn } from 'react-hook-form';
 
-export default function OfferToRegister() {
+
+interface ISignUpTemplate {
+  authRegisterForm: UseFormReturn<IAuthSignUpRequest>;
+  onSubmitForm: (e: React.FormEvent) => void;
+  isLoading: boolean;
+  openPopup: boolean;
+  setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsVerify: React.Dispatch<React.SetStateAction<boolean>>;
+  isError: boolean;
+  error: FieldErrors<FormData> | AxiosError;
+}
+
+export default function RegisterForm() {
   const theme = useTheme();
+  const { push } = useRouter();
+  const [openPopup, setOpenPopup] = useState(false);
+  const [isVerify, setIsVerify] = useState(false);
+  const { register, handleSubmit, reset } = useForm<IAuthSignUpRequest>();
+
+  const { mutateAsync: mutateSignUp, data, isLoading, isError, error } = useSignUpMutation();
+
+  useEffect(()=>{
+    data && setOpenPopup(true);
+    data && reset
+  },[data, reset])
+
+  const requestRegister: SubmitHandler<IAuthSignUpRequest> = (value) => {
+    mutateSignUp(value);
+  };
+
+  const onSubmitForm = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleSubmit(requestRegister)();
+  };
+
+  isVerify && push('/signIn');
+
   return (
     <Container
-      disableGutters
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        flexDirection: 'column',
-        rowGap: '10px',
-        maxWidth: 350,
-        width: '100%',
-        p: '10px',
-        border: `1px solid ${theme.palette.border?.main}`,
-        borderRadius: '16px',
+        alignItems: 'center',
+        height: '100vh',
+        position: 'relative',
       }}
     >
-      <Typography variant="h2" sx={{ padding: '0px 16px 0px 16px' }}>
-        Primeira vez no Twitter?
-      </Typography>
-      <Typography variant="h6" sx={{ padding: '0 12px' }}>
-        Cadastre-se agora para personalizar o seu feed!
-      </Typography>
-      <Button
-        component={Link}
-        href="/signUp"
-        variant="contained"
-        sx={{
-          height: '40px',
-          borderRadius: '100px',
-          m: '16px 12px 16px 12px',
-          textTransform: 'inherit',
-          fontFamily: theme.typography.button.fontFamily,
-          fontStyle: theme.typography.button.fontStyle,
-          fontWeight: theme.typography.button.fontWeight,
-          fontSize: theme.typography.button.fontSize,
-          lineHeight: theme.typography.button.lineHeight,
-          color: theme.typography.button.color,
-          ':hover': {
-            background: theme.palette.primary.contrastText,
-          },
-        }}
-      >
-        Registrar-se
-      </Button>
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '20px',
-          p: '9px 12px 9px 12px',
-        }}
-      >
-        <Typography variant="h6">Já tem uma conta?</Typography>
-        <Button
-          component={Link}
-          href="/signIn"
-          variant="contained"
-          sx={{
-            height: '40px',
-            borderRadius: '100px',
-            textTransform: 'inherit',
-            fontFamily: theme.typography.button.fontFamily,
-            fontStyle: theme.typography.button.fontStyle,
-            fontWeight: theme.typography.button.fontWeight,
-            fontSize: theme.typography.button.fontSize,
-            lineHeight: theme.typography.button.lineHeight,
-            color: theme.typography.button.color,
-            ':hover': {
-              background: theme.palette.primary.contrastText,
-            },
-          }}
-        >
-          Login
-        </Button>
-      </Box>
-      <Typography variant="h6" sx={{ padding: '0 12px' }}>
-        Ao se registrar, você concorda com os termos de serviço e entrega sua alma.
-      </Typography>
-    </Container>
+      <SignUpTemplate
+          onSubmitForm={onSubmitForm}
+          isLoading={isLoading}
+          openPopup={openPopup}
+          setOpenPopup={setOpenPopup}
+          setIsVerify={setIsVerify}
+          isError={isError}
+          error={error as AxiosError}
+        />
+      </Container>
   );
-};
+}

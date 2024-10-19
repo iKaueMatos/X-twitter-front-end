@@ -94,7 +94,6 @@ export default function SignUpPageForm() {
       <FormProvider {...methods}>
         <Box component="form" onSubmit={handleSubmit(onFormSubmit)}>
           <SignUpTemplate
-            authRegisterForm={methods}
             onSubmitForm={handleSubmit(onFormSubmit)}
             isLoading={false}
             openPopup={open}

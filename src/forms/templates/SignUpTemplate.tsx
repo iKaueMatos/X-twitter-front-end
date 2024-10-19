@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { FieldErrors, UseFormReturn } from 'react-hook-form';
+import React, { useEffect, useState } from 'react'
+import Image from 'next/image'
+import { FieldErrors, UseFormReturn } from 'react-hook-form'
 import {
   Typography,
   TextField,
@@ -10,26 +10,24 @@ import {
   useTheme,
   Alert,
   CircularProgress,
-} from '@mui/material';
+} from '@mui/material'
 
-import VerifyForm from '../VerifyForm';
-import { IAuthSignUpRequest } from '@/services/types';
-import { IErrorData } from '../types';
-import axios, { AxiosError } from 'axios';
+import VerifyForm from '../VerifyForm'
+import { IAuthSignUpRequest } from '@/services/types'
+import axios, { AxiosError } from 'axios'
+import Link from 'next/link'
 
 interface ISignUpTemplate {
-  authRegisterForm: UseFormReturn<IAuthSignUpRequest>;
-  onSubmitForm: (e: React.FormEvent) => void;
-  isLoading: boolean;
-  openPopup: boolean;
-  setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsVerify: React.Dispatch<React.SetStateAction<boolean>>;
-  isError: boolean;
-  error: FieldErrors<FormData> | AxiosError;
+  onSubmitForm: (e: React.FormEvent) => void
+  isLoading: boolean
+  openPopup: boolean
+  setOpenPopup: React.Dispatch<React.SetStateAction<boolean>>
+  setIsVerify: React.Dispatch<React.SetStateAction<boolean>>
+  isError: boolean
+  error: FieldErrors<FormData> | AxiosError
 }
 
 export default function SignUpTemplate({
-  authRegisterForm,
   onSubmitForm,
   isLoading,
   openPopup,
@@ -38,21 +36,24 @@ export default function SignUpTemplate({
   isError,
   error,
 }: ISignUpTemplate) {
-  const theme = useTheme();
-  const [errorMessage, setErrorMessage] = useState('');
+  const theme = useTheme()
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
     if (isError && error) {
       if (axios.isAxiosError(error)) {
-        setErrorMessage(error.message);
+        setErrorMessage(error.message)
       } else {
-        setErrorMessage(Object.values(error).map((e) => e.message).join(', '));
+        setErrorMessage(
+          Object.values(error)
+            .map((e) => e.message)
+            .join(', ')
+        )
       }
     }
-  }, [error, isError]);
+  }, [error, isError])
 
   return (
-    <>
       <Container
         component="form"
         onSubmit={onSubmitForm}
@@ -62,7 +63,7 @@ export default function SignUpTemplate({
           alignItems: 'center',
           maxWidth: '452px',
           position: 'relative',
-          padding:"16px"
+          padding: '16px',
         }}
       >
         {isLoading && <CircularProgress sx={{ position: 'absolute', m: 1 }} />}
@@ -74,7 +75,7 @@ export default function SignUpTemplate({
             rowGap: '25px',
             maxWidth: 450,
             width: '100%',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         >
           <Image
@@ -124,16 +125,45 @@ export default function SignUpTemplate({
             Inscreva-se
           </Button>
           {isError && <Alert severity="warning">{errorMessage}</Alert>}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              rowGap: '25px',
+              maxWidth: 450,
+              width: '100%',
+              alignItems: 'center',
+            }}
+          >
+            <Link
+              href="/forgotpassword"
+              style={{ color: theme.palette.primary.main }}
+            >
+              <Typography variant="h4" sx={{ fontWeight: 400 }}>
+                Esqueceu a senha?
+              </Typography>
+            </Link>
+            <Link href="/signIn">
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: 400,
+                  color: theme.palette.primary.main,
+                }}
+              >
+                Entrar
+              </Typography>
+            </Link>
+          </Box>
         </Box>
+        {!isError && (
+          <VerifyForm
+            openPopup={openPopup}
+            setOpenPopup={setOpenPopup}
+            setIsVerify={setIsVerify}
+          />
+        )}
       </Container>
 
-      {!isError && (
-        <VerifyForm
-          openPopup={openPopup}
-          setOpenPopup={setOpenPopup}
-          setIsVerify={setIsVerify}
-        />
-      )}
-    </>
-  );
+  )
 }

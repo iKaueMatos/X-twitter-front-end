@@ -1,4 +1,3 @@
-import React, { FC } from 'react';
 import { AppBar, Toolbar, useTheme } from '@mui/material';
 import { authorizedNavigationList, unauthorizedNavigationList } from '@/components/navigation/configNavigation';
 import NavigationItem from './NavigationItem';

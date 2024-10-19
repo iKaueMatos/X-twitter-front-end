@@ -32,7 +32,6 @@ export default function SignUpForm() {
 
   return (
     <SignUpTemplate
-      authRegisterForm={register}
       onSubmitForm={onSubmitForm}
       isLoading={isLoading}
       openPopup={openPopup}

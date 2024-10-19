@@ -30,7 +30,7 @@ export const useSignUpMutation = () => {
   const { registerConfig: config } = authorizationConfig;
   const state = useMutation(config.request, {
     onSuccess(data) {
-      console.log('регистрация начата', data);
+      console.log('', data);
     },
   });
 
@@ -41,10 +41,8 @@ export const useVerificationMutation = () => {
   const { verifyConfig: config } = authorizationConfig;
   const state = useMutation(config.request, {
     onSuccess(data) {
-      console.log('верификация успешна', data);
     },
     onError(error) {
-      console.log('верификация ошибка', error);
     },
   });
 
@@ -55,7 +53,6 @@ export const useLoginMutation = () => {
   const { loginConfig: config } = authorizationConfig;
   const state = useMutation(config.request, {
     onSuccess(data) {
-      console.log('логин успешен', data);
       localStorage.setItem('auth-token', data.jwt);
     },
   });

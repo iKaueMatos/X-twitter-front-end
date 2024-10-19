@@ -22,7 +22,6 @@ export const useLikeMutation = () => {
   const { makeLike: config } = likeConfig;
   const state = useMutation(config.request, {
     onSuccess(data) {
-      console.log('лайк сделан', data);
     },
   });
 
@@ -32,7 +31,6 @@ export const useDeleteLikeMutation = () => {
   const { deleteLike: config } = likeConfig;
   const state = useMutation(config.request, {
     onSuccess(data) {
-      console.log('лайк удален', data);
     },
   });
 

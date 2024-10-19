@@ -19,10 +19,8 @@ export const useEditAvatarMutation = () => {
   const state = useMutation(config.request, {
     onSuccess(data) {
       queryClient.invalidateQueries()
-      console.log('фото загружено useEditAvatarMutation', data)
     },
     onError(error) {
-      console.error('фото НЕ загружено useEditAvatarMutation', error)
     },
   })
   return state

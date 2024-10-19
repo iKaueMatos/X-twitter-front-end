@@ -17,7 +17,6 @@ export const useGetAuthorizedUserDataQuery = () => {
   const { getAuthorizedUserData: config } = profileConfig
   const state = useQuery(config.key, config.request, {
     onError(error) {
-      console.error('Данные авторизированного пользователя не получены', error)
     },
   })
   return state
